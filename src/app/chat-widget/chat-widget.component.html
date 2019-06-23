@@ -1,0 +1,90 @@
+<div class="wrapper {{ theme }}">
+    <div class="chat-box" *ngIf="visible" [@fadeInOut]="visible">
+        <div class="chat-box-header" (click)="toggleChat()">
+            <div class="">
+                <div class="operator-status">
+                    <!-- {{ operator.status }} -->
+                    <fa name="far fa-window-minimize" (click)="toggleChat()"></fa>
+                    <button class="chat-button-header" (click)="toggleChat()"> X</button>
+                </div>
+                <img src="../../assets/MEGALODON.jpg" class="avatar" />
+
+                <h3 class="operator-name">
+                    Megalodon
+                </h3>
+            </div>
+        </div>
+        <div class="chat-box-main">
+            <div class="chat-message-bottom" #bottom></div>
+            <ng-container *ngFor="let message of messages">
+                <div class="chat-message" [class.chat-message-received]="message.type === 'received'" [@fadeIn] [class.chat-message-sent]="message.type === 'sent'">
+                    <div>
+                        <img src="../../assets/user-solid.svg" class="chat-message-from-avatar" *ngIf="message.type === 'sent'" />
+                        <img src="../../assets/MEGALODON.jpg" class="chat-message-from-avatar" *ngIf="message.type === 'received'" />
+
+                        <div class="chat-message-text">
+                            {{ message.text }}
+                            <div *ngIf="message.text === 'Bienvenido, en que puedo ayudarte' && message.type === 'received'">
+                                <button class="btn btn-outline-success m-2" [disabled]="operacionCompletada" (click)="Opciones('Soporte')">Soporte</button>
+                                <button class="btn btn-outline-success m-2" [disabled]="operacionCompletada" (click)="Opciones('Administracion')">Administracion</button>
+                                <button class="btn btn-outline-success m-2" [disabled]="operacionCompletada" (click)="Opciones('Otro')">Otro</button>
+
+                            </div>
+
+                            <div *ngIf="message.text === 'Bienvenido a la estacion de soporte, Selecciona una solicitud' && message.type === 'received'">
+                                <button class="btn btn-outline-success m-2" [disabled]="operacionCompletada" (click)="Opciones('Que es un servidor vps?')">Que es un servidor vps?</button>
+                                <button class="btn btn-outline-success m-2" [disabled]="operacionCompletada" (click)="Opciones('Que es un script?')">Que es un script?</button>
+                                <button class="btn btn-outline-success m-2" [disabled]="operacionCompletada" (click)="Opciones('Cual es el mejor lenguaje de programacion?')">Cual es el mejor lenguaje de programacion?</button>
+
+                            </div>
+
+                            <div *ngIf="message.text === 'Bienvenido a la estacion de administracion, Selecciona una solicitud' && message.type === 'received'">
+                                <button class="btn btn-outline-success m-2" [disabled]="operacionCompletada" (click)="Opciones('Que es un contador publico?')">Que es un contador publico?</button>
+                                <button class="btn btn-outline-success m-2" [disabled]="operacionCompletada" (click)="Opciones('Es mejor trabajar con a2 o excel?')">Es mejor trabajar con a2 o excel?</button>
+                                <button class="btn btn-outline-success m-2" [disabled]="operacionCompletada" (click)="Opciones('Regresar al prinpicio')">Regresar al principio</button>
+
+                            </div>
+
+                            <div *ngIf="message.text === 'Para saber mas informacion de nosostros visita nuestra pagina' && message.type === 'received'">
+                                <a class="btn btn-outline-success m-2" href="https://www.google.com/">Google</a>
+                                <button class="btn btn-outline-success m-2 " [disabled]="operacionCompletada" (click)="Opciones( 'Regresar al prinpicio') ">Regresar al principio</button>
+
+
+                            </div>
+
+                            <div *ngIf="message.text === 'Te puedo ayudar en algo mas?' && message.type === 'received'">
+                                <button class="btn btn-outline-success m-2 " [disabled]="operacionCompletada" (click)="Opciones( 'Regresar al prinpicio') ">Regresar al principio</button>
+                                <button class="btn btn-outline-success m-2 " [disabled]="operacionCompletada" (click)="Opciones( 'No gracias') ">No gracias</button>
+
+
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="chat-message-date ">
+                        {{ message.date | date: "short" }}
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+        <div class="chat-box-footer ">
+            <input type="text" [disabled]="operacionCompletada" class="chat-input-text " placeholder="Escribe tu mensaje... " #message (keydown.enter)="onSubmit() " (keyup.enter)="message.value='' " (keyup.escape)="dismiss.emit() ">
+            <button class="chat-input-submit" type="submit ">↩︎</button>
+        </div>
+    </div>
+    <div id="container " style="position:fixed;bottom:0;right:0;z-index:1000; " *ngIf="!visible ">
+
+
+        <img id="chatbuttonimg " style="float:right;cursor: pointer; width:130px; height:100px; " src="assets/talk-bubbles.png " (click)="toggleChat() " />
+    </div>
+    <!-- <button class="chat-button " (click)="toggleChat() ">
+    <span [@fadeIn] *ngIf="visible ">✕</span>
+    <span [@fadeIn] *ngIf="!visible ">?</span> -->
+
+    <!-- </button> -->
+</div>
